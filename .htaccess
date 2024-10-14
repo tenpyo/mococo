@@ -1,0 +1,20 @@
+#hide technology used by website
+Header unset X-Powered-By
+
+#redirect root folder to index.html
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ryantantri.c1.biz/index.html [NC]
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^(.*)$ /blog/$1 [L]
+
+#remove tags in url
+RewriteCond %{THE_REQUEST} /([^.]+)\.html [NC]
+RewriteRule ^ /%1 [NC,L,R]
+
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^ %{REQUEST_URI}.html [NC,L]
+
+#hide technology used by website again
+RewriteCond %{HTTP_USER_AGENT} ^Wappalyzer [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} ^WhatWeb [NC]
+RewriteRule .* - [F,L]
